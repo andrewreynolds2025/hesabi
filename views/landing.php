@@ -19,7 +19,7 @@
     <header class="landing-header">
         <div class="container">
             <div class="logo-3d">
-                <img src="/assets/logo.svg" alt="لوگو حسابداری">
+                <img src="assets/logo.svg" alt="لوگو حسابداری">
                 <span>حسابداری نوین</span>
             </div>
             <nav class="landing-nav">
@@ -30,8 +30,8 @@
                 </ul>
             </nav>
             <div class="landing-actions">
-                <a href="/login" class="btn btn-login">ورود</a>
-                <a href="/register" class="btn btn-register">ثبت‌نام</a>
+                <a href="login" class="btn btn-login">ورود</a>
+                <a href="register" class="btn btn-register">ثبت‌نام</a>
             </div>
         </div>
     </header>
@@ -41,7 +41,7 @@
         <div class="container hero-content">
             <h1 class="hero-title">برنامه حسابداری <span class="gradient-text">هوشمند</span> و مدرن</h1>
             <p class="hero-desc">ساده، سریع، سه‌بعدی و کاملاً ایرانی با امکانات مدیریت مالی و گزارش‌گیری حرفه‌ای</p>
-            <a href="/register" class="btn btn-cta">همین حالا شروع کنید</a>
+            <a href="register" class="btn btn-cta">همین حالا شروع کنید</a>
         </div>
         <div class="parallax-shapes">
             <div class="shape shape1"></div>
@@ -60,17 +60,17 @@
                     <p>طراحی کاملاً ساده، قابل فهم و مناسب کاربران فارسی‌زبان</p>
                 </div>
                 <div class="feature-card card-3d">
-                    <img src="/assets/img/feature2.svg" alt="امنیت">
+                    <img src="assets/img/feature2.svg" alt="امنیت">
                     <h3>امنیت بالا</h3>
                     <p>استفاده از استانداردهای روز امنیتی در نگهداری اطلاعات مالی</p>
                 </div>
                 <div class="feature-card card-3d">
-                    <img src="/assets/img/feature3.svg" alt="چارت‌ها">
+                    <img src="assets/img/feature3.svg" alt="چارت‌ها">
                     <h3>گزارش‌گیری تصویری</h3>
                     <p>نمایش نمودار و چارت‌های مالی به صورت حرفه‌ای و سه‌بعدی</p>
                 </div>
                 <div class="feature-card card-3d">
-                    <img src="/assets/img/feature4.svg" alt="ریسپانسیو">
+                    <img src="assets/img/feature4.svg" alt="ریسپانسیو">
                     <h3>کاملاً ریسپانسیو</h3>
                     <p>نمایش عالی در موبایل، تبلت و دسکتاپ</p>
                 </div>
