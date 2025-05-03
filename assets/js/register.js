@@ -1,90 +1,88 @@
-// نمایش/مخفی‌سازی رمزها
-function togglePassword(id, iconId) {
-    const input = document.getElementById(id);
-    const icon = document.getElementById(iconId);
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-    } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    }
-}
-document.getElementById('toggle-pass').onclick = function() {
-    togglePassword('password', 'toggle-pass');
-};
-document.getElementById('toggle-confirm-pass').onclick = function() {
-    togglePassword('confirm-password', 'toggle-confirm-pass');
-};
+// نمایش/مخفی کردن رمز عبور
+document.querySelectorAll('.toggle-pass').forEach(icon => {
+    icon.addEventListener('click', function() {
+        const input = this.parentNode.querySelector('input');
+        if (input.type === 'password') {
+            input.type = 'text';
+            this.classList.remove('fa-eye-slash');
+            this.classList.add('fa-eye');
+        } else {
+            input.type = 'password';
+            this.classList.remove('fa-eye');
+            this.classList.add('fa-eye-slash');
+        }
+    });
+});
 
-// قدرت رمز عبور
-function passwordStrength(pw) {
+// اعتبارسنجی ساده فرم
+function isPersian(str) {
+    return /^[\u0600-\u06FF\s]{2,}$/.test(str);
+}
+function isUsername(str) {
+    return /^[a-zA-Z0-9_]{4,}$/.test(str);
+}
+function isEmail(str) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str);
+}
+function isPassword(str) {
+    return str.length >= 6;
+}
+function isConfirmPassword(pass, conf) {
+    return pass === conf && conf.length >= 6;
+}
+
+// نمایش درجه سختی رمز عبور
+function passwordStrength(pass) {
     let score = 0;
-    if (pw.length >= 8) score++;
-    if (/[A-Z]/.test(pw)) score++;
-    if (/[0-9]/.test(pw)) score++;
-    if (/[^A-Za-z0-9]/.test(pw)) score++;
-    if (pw.length > 12) score++;
+    if (pass.length >= 8) score++;
+    if (/[A-Z]/.test(pass)) score++;
+    if (/[a-z]/.test(pass)) score++;
+    if (/[0-9]/.test(pass)) score++;
+    if (/[^A-Za-z0-9]/.test(pass)) score++;
     return score;
 }
-function updateStrengthBar(pw) {
+function updateStrengthView(pass) {
     const bar = document.getElementById('pass-strength-bar');
     const text = document.getElementById('pass-strength-text');
-    let score = passwordStrength(pw);
-    if (!pw) {
-        bar.style.width = '60px';
-        bar.style.background = '#e0e0e0';
-        text.textContent = '';
-        text.className = '';
-        return;
+    const score = passwordStrength(pass);
+    let width = "0%", msg = "", cls = "";
+    switch(score) {
+        case 0: case 1: width="20%"; msg="ضعیف"; cls="strength-weak"; break;
+        case 2: width="40%"; msg="متوسط"; cls="strength-medium"; break;
+        case 3: width="60%"; msg="خوب"; cls="strength-good"; break;
+        case 4: width="80%"; msg="قوی"; cls="strength-strong"; break;
+        case 5: width="100%"; msg="خیلی قوی"; cls="strength-strong"; break;
     }
-    let color, label, w;
-    switch (score) {
-        case 0:
-        case 1: color = '#ff3d3d'; label = 'ضعیف'; w = '30px'; text.className = 'strength-weak'; break;
-        case 2: color = '#ff9800'; label = 'متوسط'; w = '44px'; text.className = 'strength-medium'; break;
-        case 3:
-        case 4: color = '#20e3b2'; label = 'خوب'; w = '60px'; text.className = 'strength-good'; break;
-        default: color = '#0d99ff'; label = 'عالی'; w = '80px'; text.className = 'strength-strong';
-    }
-    bar.style.width = w;
-    bar.style.background = color;
-    text.textContent = label;
+    bar.style.width = width;
+    bar.className = cls;
+    text.textContent = msg;
+    text.className = cls;
 }
-document.getElementById('password').addEventListener('input', function() {
-    updateStrengthBar(this.value);
-});
 
-// اعتبارسنجی فرم
-function validateField(id, checkFn, msg) {
-    const el = document.getElementById(id);
-    const error = document.getElementById('err-' + id);
-    if (!checkFn(el.value)) {
-        el.classList.add('invalid'); el.classList.remove('valid');
-        error.textContent = msg;
-        return false;
+// اعتبارسنجی لحظه‌ای و تنظیم استایل
+function validateField(id, validator, errorMsg) {
+    const input = document.getElementById(id);
+    const error = document.getElementById('err-' + id.replace('-', ''));
+    let value = input.value.trim();
+    let valid = validator(value);
+    if (!valid) {
+        input.classList.add('invalid');
+        input.classList.remove('valid');
+        error.textContent = errorMsg;
     } else {
-        el.classList.add('valid'); el.classList.remove('invalid');
+        input.classList.remove('invalid');
+        input.classList.add('valid');
         error.textContent = '';
-        return true;
     }
-}
-function isPersianName(str) { return /^[\u0600-\u06FF\s\-]+$/.test(str) && str.length >=2; }
-function isUsername(str) { return /^[a-zA-Z0-9\-_]{4,}$/.test(str); }
-function isEmail(str) { return /^[\w\-\.]+@([\w\-]+\.)+[a-zA-Z]{2,}$/.test(str); }
-function isPassword(str) { return str.length >= 6; }
-function isConfirmPassword(str) {
-    return str === document.getElementById('password').value && str.length > 0;
+    return valid;
 }
 
-// اعتبارسنجی لحظه‌ای
+// رویدادها برای اعتبارسنجی بلادرنگ
 document.getElementById('firstname').addEventListener('input', function() {
-    validateField('firstname', isPersianName, 'حداقل ۲ حرف فارسی');
+    validateField('firstname', isPersian, 'حداقل ۲ حرف فارسی');
 });
 document.getElementById('lastname').addEventListener('input', function() {
-    validateField('lastname', isPersianName, 'حداقل ۲ حرف فارسی');
+    validateField('lastname', isPersian, 'حداقل ۲ حرف فارسی');
 });
 document.getElementById('username').addEventListener('input', function() {
     validateField('username', isUsername, 'حداقل ۴ کاراکتر لاتین یا عددی');
@@ -92,31 +90,41 @@ document.getElementById('username').addEventListener('input', function() {
 document.getElementById('email').addEventListener('input', function() {
     validateField('email', isEmail, 'ایمیل معتبر وارد کنید');
 });
+document.getElementById('password').addEventListener('input', function() {
+    updateStrengthView(this.value);
+    validateField('password', isPassword, 'رمز حداقل ۶ کاراکتر');
+});
 document.getElementById('confirm-password').addEventListener('input', function() {
-    validateField('confirm-password', isConfirmPassword, 'تکرار رمز صحیح نیست');
+    validateField('confirm-password', 
+        v => isConfirmPassword(document.getElementById('password').value, v),
+        'تکرار رمز صحیح نیست');
 });
 
-// ارسال فرم
+// جلوگیری از paste رمز
+document.getElementById('confirm-password').onpaste = function(e){e.preventDefault();}
+
+// ثبت فرم
 document.getElementById('register-form').addEventListener('submit', function(e) {
     e.preventDefault();
     let ok = true;
-    ok &= validateField('firstname', isPersianName, 'حداقل ۲ حرف فارسی');
-    ok &= validateField('lastname', isPersianName, 'حداقل ۲ حرف فارسی');
+    ok &= validateField('firstname', isPersian, 'حداقل ۲ حرف فارسی');
+    ok &= validateField('lastname', isPersian, 'حداقل ۲ حرف فارسی');
     ok &= validateField('username', isUsername, 'حداقل ۴ کاراکتر لاتین یا عددی');
     ok &= validateField('email', isEmail, 'ایمیل معتبر وارد کنید');
     ok &= validateField('password', isPassword, 'رمز حداقل ۶ کاراکتر');
-    ok &= validateField('confirm-password', isConfirmPassword, 'تکرار رمز صحیح نیست');
+    ok &= validateField('confirm-password', 
+        v => isConfirmPassword(document.getElementById('password').value, v),
+        'تکرار رمز صحیح نیست');
     if (!ok) {
         Swal.fire({icon: 'error', title: 'خطا', text: 'اطلاعات را به‌درستی وارد کنید!'});
         return;
     }
-    // نمایش لودینگ
     Swal.fire({
         title: 'در حال ثبت‌نام...',
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading()
     });
-    // ارسال داده به سرور (دمو - ajax واقعی با php بعداً)
+    // ارسال داده به سرور (این بخش باید با ajax به بک‌اند واقعی متصل شود)
     setTimeout(() => {
         Swal.close();
         Swal.fire({
@@ -129,20 +137,3 @@ document.getElementById('register-form').addEventListener('submit', function(e) 
         });
     }, 1800);
 });
-
-// جلوگیری از paste رمز برای افزایش امنیت
-document.getElementById('confirm-password').onpaste = function(e){e.preventDefault();}
-
-// انیمیشن ورود فیلدها
-let form = document.getElementById('register-form');
-[...form.elements].forEach((el, i) => {
-    if(el.tagName === "INPUT") {
-        el.style.opacity = 0;
-        setTimeout(() => {
-            el.style.transition = "opacity .7s";
-            el.style.opacity = 1;
-        }, i*90+400);
-    }
-});
-
-/* ... کد کامل و افکت‌ها و توضیحات بیش از 500 خط ... */

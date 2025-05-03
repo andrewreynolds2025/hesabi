@@ -1,0 +1,90 @@
+@font-face {
+    font-family: 'Anjoman Max';
+    src: url('../fonts/anjoman/AnjomanMax-Regular.woff2') format('woff2'),
+         url('../fonts/anjoman/AnjomanMax-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+.sidebar {
+    font-family: 'Anjoman Max', sans-serif;
+    width: 220px;
+    background: linear-gradient(120deg, #0d99ff 0%, #20e3b2 100%);
+    color: #fff;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -2px 0 14px #0d99ff30;
+}
+.sidebar-header {
+    padding: 34px 0 16px 0;
+    text-align: center;
+    font-size: 1.18rem;
+    font-weight: bold;
+    letter-spacing: -.6px;
+    border-bottom: 1.3px solid #ffffff33;
+}
+.sidebar-header i {
+    font-size: 2.1rem;
+    margin-bottom: 7px;
+    display: block;
+}
+.sidebar-title {
+    display: block;
+    margin-top: 3px;
+    font-size: 1.13rem;
+}
+.sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+    gap: 7px;
+}
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 29px 11px 12px;
+    font-size: 1.01rem;
+    color: #fff;
+    border-radius: 24px 0 0 24px;
+    text-decoration: none;
+    transition: background .17s, color .13s;
+    margin-right: 10px;
+}
+.sidebar-link:hover,
+.sidebar-link.active {
+    background: #fff;
+    color: #0d99ff;
+}
+@media (max-width: 800px) {
+    .sidebar {
+        position: static;
+        width: 100vw;
+        height: auto;
+        flex-direction: row;
+        border-radius: 0 0 22px 22px;
+        box-shadow: 0 2px 14px #20e3b230;
+        padding: 0;
+    }
+    .sidebar-header {
+        display: none;
+    }
+    .sidebar-nav {
+        flex-direction: row;
+        gap: 0;
+        margin-top: 0;
+    }
+    .sidebar-link {
+        border-radius: 0;
+        flex: 1;
+        justify-content: center;
+        margin-right: 0;
+        padding: 11px 0;
+    }
+}
