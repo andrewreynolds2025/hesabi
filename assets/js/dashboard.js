@@ -18,6 +18,7 @@ const chartConfigs = [
 ];
 
 window.addEventListener('DOMContentLoaded', () => {
+    Chart.defaults.font.family = "'Anjoman Max', sans-serif";
     chartConfigs.forEach((cfg, i) => {
         const ctx = document.getElementById(`chart${i+1}`).getContext('2d');
         let data, options = {};

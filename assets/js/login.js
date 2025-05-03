@@ -73,7 +73,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
             confirmButtonText: 'باشه'
         }).then(() => {
             // تغییر مسیر به داشبورد یا صفحه اصلی
-            window.location.href = '/hesabi/dashboard.php';
+            window.location.href = '/hesabi/dashboard';
         });
     }, 1400);
 });
