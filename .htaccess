@@ -1,12 +1,6 @@
 RewriteEngine On
 
-# حذف پسوند php از url
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^([^/]+)/?$ $1.php [L]
-
-# روتینگ اصلی - تمام درخواست‌ها به index.php
-RewriteEngine On
+# برای حذف پسوند .php و هدایت به index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)$ index.php?page=$1 [QSA,L]
+RewriteRule ^([a-zA-Z0-9_-]+)/?$ index.php?page=$1 [QSA,L]
