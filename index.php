@@ -20,6 +20,7 @@ $allowedPages = [
     'currency_document', 'persons_balance', 'items_balance', 'salary_document',
     'reports', 'settings', 'login', 'register', 'logout'
 ];
+$noSidebarPages = ['login', 'register', 'landing'];
 
 if (!in_array($page, $allowedPages)) {
     $page = 'dashboard';
