@@ -3,10 +3,10 @@ session_start();
 require_once 'config.php';
 require_once 'functions.php';
 
-// گرفتن نام صفحه از پارامتر
-$page = $_GET['page'] ?? 'dashboard';
+$page = $_GET['page'] ?? 'landing';
 
 $allowedPages = [
+    // همه صفحات مجاز لیست شود
     'dashboard', 'persons', 'person_new', 'receipts_list', 'payments_list',
     'shareholders', 'suppliers', 'products', 'new_product', 'new_service', 'products_services',
     'price_list_update', 'barcode_print', 'barcode_print_batch', 'price_list',
@@ -18,14 +18,16 @@ $allowedPages = [
     'accounting', 'new_document', 'documents_list', 'opening_balance', 'close_year', 'accounts_table', 'documents_merge',
     'others', 'archive', 'sms_panel', 'inquiry', 'other_receipts', 'other_receipts_list', 'other_payments', 'other_payments_list',
     'currency_document', 'persons_balance', 'items_balance', 'salary_document',
-    'reports', 'settings', 'login', 'register', 'logout'
+    'reports', 'settings', 'login', 'register', 'logout', 'landing'
 ];
 $noSidebarPages = ['login', 'register', 'landing'];
 
 if (!in_array($page, $allowedPages)) {
-    $page = 'dashboard';
+    $page = 'landing';
 }
 
-include "views/sidebar.php";
+if (!in_array($page, $noSidebarPages)) {
+    include "views/sidebar.php";
+}
 include "views/{$page}.php";
 ?>

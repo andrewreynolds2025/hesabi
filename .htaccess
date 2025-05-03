@@ -1,6 +1,6 @@
 RewriteEngine On
 
-# برای حذف پسوند .php و هدایت به index.php
+# اگر فایل یا دایرکتوری نبود، به index.php?page=...
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([a-zA-Z0-9_-]+)/?$ index.php?page=$1 [QSA,L]
+RewriteRule ^([a-zA-Z0-9_-]+)?$ index.php?page=$1 [QSA,L]
