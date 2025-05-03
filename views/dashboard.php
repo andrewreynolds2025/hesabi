@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="assets/css/sidebar.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <?php include('sidebar.php'); ?>
+    <script src="assets/js/sidebar.js"></script>
     <main class="dashboard-main">
         <h1 class="dashboard-title">داشبورد مدیریتی</h1>
         <div class="charts-grid">
